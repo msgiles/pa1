@@ -9,11 +9,10 @@ typedef int vertex;
 
 class Edge{
 public:
-	Edge(vertex v1, vertex v2, float w);
-	float weight;
-	vertex end1;
-	vertex end2;
-	float get_weight();
+	Edge(vertex vert, float dist);
+	float distance;
+	vertex vert;
+	float get_dist();
 	void print();
 };
 
@@ -30,6 +29,7 @@ public:
 	void insert(Edge item);
 	Edge deletemin();
 	void print();
+	bool isempty();
 };
 
 #endif

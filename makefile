@@ -1,8 +1,16 @@
-tests: heap.o 
-	g++ -Wall heap.o tests.cpp -o tests
+CC = g++
+CFLAGS = 
+RM = -rm -f
 
-heap.o: heap.cpp heap.h
-	g++ -Wall -c heap.cpp
+tests: rand_graph.cpp heap.cpp
+	$(CC) $(CFLAGS) rand_graph.cpp heap.cpp tests.cpp -o tests
 
-# clean:
-#     \rm *.o
+# rand_graph.o: heap.o rand_graph.cpp rand_graph.h
+# 	$(CC) $(CFLAGS) rand_graph.cpp heap.o -o rand_graph.o
+
+# heap.o: heap.cpp heap.h
+# 	$(CC) $(CFLAGS) heap.cpp -o heap.o
+
+clean:
+	$(RM) tests *.o
+

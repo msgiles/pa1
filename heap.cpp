@@ -4,30 +4,40 @@
 
 using namespace std;
 
-Edge::Edge(vertex v, float dist){
+Elt::Elt(vertex v, float dist){
 	vert = v;
 	distance = dist;
 }
 
-float Edge::get_dist(){
+float Elt::get_dist(){
 	return distance;
 }
 
-void Edge::print(){
+void Elt::print(){
 	std::cout << vert << ": " << distance;
 	std::cout << endl;
 }
 
-MinHeap::MinHeap(Edge* array, int length){
+MinHeap::MinHeap(Elt* array, int length){
 	keys.reserve(length);
+    map.reserve(length);
     for(int i = 0; i < length; ++i){
         keys.push_back(array[i]);
+        map.push_back(-1);
     }
-
+    for(int i = 0; i < length; ++i){
+        Elt e = keys[i];
+        map[e.vert] = i;
+    }
     make_heap();
 }
 
-MinHeap::MinHeap(const std::vector<Edge>& vector) : keys(vector){
+MinHeap::MinHeap(std::vector<float> vector){
+    int len = vector.size();
+    keys.reserve(len);
+    for (int i = 0; i < len - 1; ++i){
+        keys.push_back(Elt::Elt(i, vector.at(i)));
+    }
     make_heap();
 }
 
@@ -42,31 +52,41 @@ void MinHeap::make_heap(){
     }
 }
 
-void MinHeap::insert(Edge item){
-    cout << "Inserting ";
-    item.print();
+void MinHeap::insert(Elt item){
 	int len = keys.size();
 	keys[len] = item;
+    map[item.vert] = len;
 	MinHeap::bubble_up(keys.size() - 1);
 	return;
 }
 
-Edge MinHeap::deletemin(){
+Elt MinHeap::deletemin(){
 	int len = keys.size();
 	assert(len != 0);
-   	Edge val = keys[0];
+   	Elt val = keys[0];
     keys[0] = keys[len-1];
    	keys.pop_back();
     bubble_down(0);
-    cout << "Deleting ";
-    val.print();
     return val;
+}
+
+void MinHeap::decreasekey(vertex v, float val){
+    int dest = map[v];
+    assert(v < map.size());
+    if (dest != -1){
+        keys[dest].distance = val;
+        bubble_up(dest);
+        return;
+    }
+    else{
+        return;
+    }
 }
 
 void MinHeap::print(){
 	int size = keys.size();
 	for (int i = 0; i < size; i++){
-		Edge current = keys[i];
+		Elt current = keys[i];
 		current.print();
 	}
 }
@@ -91,7 +111,11 @@ void MinHeap::bubble_down(int idx){
 
     if(minIdx != idx){
         //need to swap
-        Edge tmp = keys[idx];
+        Elt tmp = keys[idx];
+        vertex pVert = tmp.vert;
+        vertex cVert = keys[minIdx].vert;
+        map[cVert] = idx;
+        map[pVert] = minIdx;
         keys[idx] = keys[minIdx];
         keys[minIdx] = tmp;
         bubble_down(minIdx);
@@ -105,7 +129,11 @@ void MinHeap::bubble_up(int idx){
     int parentIdx = (idx-1)/2;
 
     if(keys[parentIdx].get_dist() > keys[idx].get_dist()){
-       	Edge tmp = keys[parentIdx];
+       	Elt tmp = keys[parentIdx];
+        vertex pVert = tmp.vert;
+        vertex cVert = keys[idx].vert;
+        map[cVert] = parentIdx;
+        map[pVert] = idx;
         keys[parentIdx] = keys[idx];
         keys[idx] = tmp;
         bubble_up(parentIdx);

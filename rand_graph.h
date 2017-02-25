@@ -8,9 +8,9 @@ const int INFTY = 2;
 
 matrix rand_matrix(int n);
 
-float access_weight(vertex v1, vertex v2);
+float access_matrix(vertex v1, vertex v2);
 
-matrix matrix_Prims(int n);
+float matrix_Prims(int n);
 
 matrix rand_npoints(int n, int d);
 

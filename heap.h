@@ -7,9 +7,9 @@ using namespace std;
 
 typedef int vertex;
 
-class Edge{
+class Elt{
 public:
-	Edge(vertex vert, float dist);
+	Elt(vertex vert, float dist);
 	float distance;
 	vertex vert;
 	float get_dist();
@@ -18,16 +18,18 @@ public:
 
 class MinHeap{
 private:
-	std::vector<Edge> keys;
+	std::vector<Elt> keys;
+	std::vector<vertex> map;
 	void bubble_down(int idx);
 	void bubble_up(int idx);
 	void make_heap();
 public:
 	MinHeap();
-    MinHeap(Edge* array, int length);
-    MinHeap(const std::vector<Edge>& vector);
-	void insert(Edge item);
-	Edge deletemin();
+    MinHeap(Elt* array, int length);
+    MinHeap(std::vector<float> vector);
+	void insert(Elt item);
+	Elt deletemin();
+	void decreasekey(vertex v, float val);
 	void print();
 	bool isempty();
 };

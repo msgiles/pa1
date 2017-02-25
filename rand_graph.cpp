@@ -24,7 +24,7 @@ matrix rand_matrix(int n){ // Returns random nxn adjacency matrix with real-valu
 	return M;
 }
 
-float access_matrix(matrix M, vertex v1, vertex v2){
+float access_matrix(const matrix &M, vertex v1, vertex v2){
 	if (v1 > v2){
 		return M[v1][v2];
 	}
@@ -33,46 +33,55 @@ float access_matrix(matrix M, vertex v1, vertex v2){
 	}
 }
 
-float matrix_prims(int n){  // Generates a random adjacency matrix and runs Prim's Algorithm on it
+float matrix_Prims(int n){  // Generates a random adjacency matrix and runs Prim's Algorithm on it
 							// Start node is by default 0
 	std::vector<vertex> prev;
 	std::vector<float> dist;
+	std::vector<bool> visited;
 	prev.reserve(n);
 	dist.reserve(n);
+	visited.reserve(n);
 
-	std::vector<vertex> S;
+	float W;
 
 	for (int i = 0; i < n; i++){
 		dist.push_back(INFTY);
 		prev.push_back(-1);
+		visited.push_back(false);
 	}
 
 	matrix M = rand_matrix(n);
+
+	for(int i = 0; i < 4; i++){
+		for(int j = 0; j < 4 - i; j++){
+			cout << M[i][j] << " ";
+		}
+		cout << endl;
+	}
 
 	vertex s = 0;
 
 	dist[s] = 0;
 	prev[s] = 0;
 
-	Edge start[] = {Edge(s,0)};
-
-	MinHeap H(start, 1);
+	MinHeap H(dist);
 
 	while(!H.isempty()){
-		Edge e = H.deletemin();
+		Elt e = H.deletemin();
 		vertex v = e.vert;
-		S.push_back(v);
+		visited[v] = true;
+		W += e.distance;
 		for (int i = 0; i < n; i++){
-						int len = access_matrix(M, i, v);
-			if (dist[i] > len){
+			int len = access_matrix(M, i, v);
+			if (dist[i] > len && !visited[i]){
 				dist[i] = len;
 				prev[i] = v;
-				H.insert(Edge(v, len));
+				H.decreasekey(i, len);
+			}
+
 		}
-
-			};
-	};
-
+	}
+	return W;
 }
 
 matrix rand_points(int n, int d) // Returns random n-array of d-dimensional random points

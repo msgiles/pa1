@@ -1,7 +1,7 @@
 #include <iostream>
 #include "rand_graph.h"
 // #include "set.h"
-#include "heap.h"
+// #include "heap.h"
 
 int main(void){
 	// matrix M = rand_mtrx(3);
@@ -17,42 +17,46 @@ int main(void){
 	// Set *w = UNION(&u, &v);
 	// return 0;
 
-	Edge e1 = Edge::Edge(2, .45);
-	Edge e2 = Edge::Edge(3, .23);
-	Edge e3 = Edge::Edge(1, .85);
+	Elt e1 = Elt::Elt(2, .45);
+	Elt e2 = Elt::Elt(3, .23);
+	Elt e3 = Elt::Elt(1, .85);
 
-	Edge array[] = {e1, e2, e3};
+	Elt array[] = {e1, e2, e3};
 
-	for (int i = 0; i < 3; i++){
-		array[i].print();
-	}
+	std::vector<float> vec;
 
-	MinHeap a;
+	vec.push_back(.85);
+	vec.push_back(.23);
+	vec.push_back(.45);
+	// MinHeap a;
 
-	MinHeap	b(array, 3);
+	MinHeap a(array, 3);
 
-	// if (a.isempty()){
-	// 	cout << "Empty!" << endl;
+	a.print();
+
+	MinHeap	b(vec);
+
+	// b.print();
+
+	// b.decreasekey(1, .15);
+
+	// b.print();
+
+	// for (int i = 0; i < 3; i++){
+	// 	Elt temp = b.deletemin();
 	// 	b.print();
 	// }
-	// else{
-	// 	cout << "Uh oh" << endl;
-	// 	b.print();
-	// }
 
-	for (int i = 0; i < 3; i++){
-		Edge temp = b.deletemin();
-		b.print();
-	}
+	// matrix_Prims(5);
 
-	matrix M = rand_matrix(4);
-	cout << M[0][0] << endl;
-	for(int i = 0; i < 4; i++){
-		for(int j = 0; j < 4 - i; j++){
-			cout << M[i][j];
-		};
-		cout << endl;
-	};
+	// matrix M = rand_matrix(4);
+	// cout << M[0][0] << endl;
+	// for(int i = 0; i < 4; i++){
+	// 	for(int j = 0; j < 4 - i; j++){
+	// 		cout << M[i][j];
+	// 	};
+	// 	cout << endl;
+	// };
 
     return 0;
 

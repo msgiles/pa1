@@ -9,6 +9,11 @@ Elt::Elt(vertex v, float dist){
 	distance = dist;
 }
 
+Elt::Elt(){
+    vert = -1;
+    distance = INFTY;
+}
+
 float Elt::get_dist(){
 	return distance;
 }
@@ -19,11 +24,11 @@ void Elt::print(){
 }
 
 MinHeap::MinHeap(Elt* array, int length){
-	keys.reserve(length);
-    map.reserve(length);
+	keys.resize(length);
+    map.resize(length);
     for(int i = 0; i < length; ++i){
-        keys.push_back(array[i]);
-        map.push_back(-1);
+        keys[i] = array[i];
+        map[i] = -1;
     }
     for(int i = 0; i < length; ++i){
         Elt e = keys[i];
@@ -33,13 +38,14 @@ MinHeap::MinHeap(Elt* array, int length){
 }
 
 MinHeap::MinHeap(std::vector<float> dists){
+    cout << "Loading Arrays..." << endl;
     int len = dists.size();
-    keys.reserve(len);
-    map.reserve(len);
+    keys.resize(len);
+    map.resize(len);
     for (int i = 0; i < len; ++i){
         Elt e(i, dists.at(i));
-        keys.push_back(e);
-        map.push_back(i);
+        keys[i] = e;
+        map[i] =i;
     }
     make_heap();
 }
@@ -48,6 +54,7 @@ MinHeap::MinHeap(){
 }
 
 void MinHeap::make_heap(){
+    cout << "Making Heap" << endl;
     int length = keys.size();
     for(int i=length-1; i>=0; --i)
     {

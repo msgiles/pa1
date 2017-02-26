@@ -37,9 +37,7 @@ MinHeap::MinHeap(std::vector<float> dists){
     keys.reserve(len);
     map.reserve(len);
     for (int i = 0; i < len; ++i){
-        cout << dists.at(i) << endl;
         Elt e(i, dists.at(i));
-        e.print();
         keys.push_back(e);
         map.push_back(i);
     }

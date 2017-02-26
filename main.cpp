@@ -30,15 +30,18 @@ int main(int argc, char* argv[]) {
         int numpoints = atoi(argv[2]);
         int numtrials = atoi(argv[3]);
         int dimension = atoi(argv[4]);
-        float total = 0.0;
+        float max = 0.0;
         
         for (int i = 0; i < numtrials; i++) {
-            total += euclid_Prims_Longest_Edge(numpoints, dimension);
-            cout << euclid_Prims_Longest_Edge(numpoints, dimension) << endl;
+            float currentMax = euclid_Prims_Longest_Edge(numpoints, dimension);
+            
+            if (currentMax > max) {
+                max = currentMax;
+            }
+            cout << currentMax << endl;
         }
         
-        float average = total / numtrials;
-        cout << "average: " << average << endl;
+        cout << "maximum: " << max << endl;
         
         return 1;
     } else {

@@ -9,14 +9,14 @@ int main(int argc, char* argv[]) {
         int numpoints = atoi(argv[2]);
         int numtrials = atoi(argv[3]);
         int dimension = atoi(argv[4]);
-        float total = 0;
+        float total = 0.0;
         
         for (int i = 0; i < numtrials; i++) {
-            total += matrix_Prims(numpoints);
+            total += euclid_Prims(numpoints, dimension);
         }
         
         float average = total / numtrials;
-        cout << average << endl;
+        cout << average << " " << numpoints << " " << numtrials << " " << dimension << endl;
         
         return 1;
     } else if (argc == 3 && atoi(argv[1]) == 1) { //test mode for Prim's
@@ -25,12 +25,22 @@ int main(int argc, char* argv[]) {
         
         cout << matrix_Prims(numpoints) << endl;
         return 1;
-    } else if (argc == 4 $$ atoi(argv[1]) == 2) {
+    } else if (argc == 5 && atoi(argv[1]) == 2) { //trial mode to determine longest edge in MST (for k(n))
         int mode = atoi(argv[1]);
         int numpoints = atoi(argv[2]);
         int numtrials = atoi(argv[3]);
+        int dimension = atoi(argv[4]);
+        float total = 0.0;
         
+        for (int i = 0; i < numtrials; i++) {
+            total += euclid_Prims_Longest_Edge(numpoints, dimension);
+            cout << euclid_Prims_Longest_Edge(numpoints, dimension) << endl;
+        }
         
+        float average = total / numtrials;
+        cout << "average: " << average << endl;
+        
+        return 1;
     } else {
         return -1;
     }

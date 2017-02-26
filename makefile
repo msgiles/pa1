@@ -14,8 +14,5 @@ heap.o: heap.cpp heap.h
 clean:
 	$(RM) tests *.o
 
-tests_simple:
-	$(CC) heap.cpp rand_graph.cpp tests.cpp -o tests
-
 randmst:
 	$(CC) heap.cpp rand_graph.cpp main.cpp -o randmst

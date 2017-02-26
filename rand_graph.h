@@ -26,4 +26,6 @@ matrix rand_npoints(int n, int d);
 float euclid_distance(std::vector<float> p1, std::vector<float> p2);
 
 float euclid_Prims(int n, int d);
+
+float euclid_Prims_Longest_Edge(int n, int d);
 #endif

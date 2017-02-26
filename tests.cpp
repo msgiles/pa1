@@ -17,24 +17,49 @@ int main(void){
 	// Set *w = UNION(&u, &v);
 	// return 0;
 
-	Elt e1 = Elt::Elt(2, .45);
-	Elt e2 = Elt::Elt(3, .23);
-	Elt e3 = Elt::Elt(1, .85);
+	// Elt e1 = Elt::Elt(2, .45);
+	// Elt e2 = Elt::Elt(3, .23);
+	// Elt e3 = Elt::Elt(1, .85);
 
-	Elt array[] = {e1, e2, e3};
+	// Elt array[] = {e1, e2, e3};
 
-	std::vector<float> vec;
 
-	vec.push_back(.85);
-	vec.push_back(.23);
-	vec.push_back(.45);
-	// MinHeap a;
 
-	MinHeap a(array, 3);
+	// std::vector<float> vec;
 
-	a.print();
+	// for (int i = 0; i < 20; i++){
+	// 	float v = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	// 	vec.push_back(v);
+	// 	cout << v << endl;
+	// }
 
-	MinHeap	b(vec);
+	// MinHeap	b(vec);
+
+	// cout << endl;
+
+	// b.print();
+
+	// cout << endl;
+
+	// MinHeap c = b;
+
+	// for (int i = 0; i < 20; i++){
+	// 	Elt e = c.deletemin();
+	// 	e.print();
+	// 	cout << endl;
+	// }
+
+	// Elt e = b.deletemin();
+
+	// cout << endl;
+
+	// b.decreasekey(13, e.distance);
+
+	// for (int i = 0; i < 19; i++){
+	// 	Elt e = b.deletemin();
+	// 	e.print();
+	// 	cout << endl;
+	// }
 
 	// b.print();
 
@@ -47,7 +72,9 @@ int main(void){
 	// 	b.print();
 	// }
 
-	// matrix_Prims(5);
+	cout << matrix_Prims(5) << endl;
+
+
 
 	// matrix M = rand_matrix(4);
 	// cout << M[0][0] << endl;

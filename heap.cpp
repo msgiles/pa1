@@ -32,11 +32,16 @@ MinHeap::MinHeap(Elt* array, int length){
     make_heap();
 }
 
-MinHeap::MinHeap(std::vector<float> vector){
-    int len = vector.size();
+MinHeap::MinHeap(std::vector<float> dists){
+    int len = dists.size();
     keys.reserve(len);
-    for (int i = 0; i < len - 1; ++i){
-        keys.push_back(Elt::Elt(i, vector.at(i)));
+    map.reserve(len);
+    for (int i = 0; i < len; ++i){
+        cout << dists.at(i) << endl;
+        Elt e(i, dists.at(i));
+        e.print();
+        keys.push_back(e);
+        map.push_back(i);
     }
     make_heap();
 }

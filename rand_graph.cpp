@@ -5,31 +5,32 @@
 
 using namespace std;
 
-matrix rand_matrix(int n){ // Returns random nxn adjacency matrix with real-valued edge weights [0,1]
+matrix rand_matrix(int n){ // Returns half of a random nxn matrix
 	srand(time(NULL));
 	matrix M(n, std::vector<float>(n));
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < n - i; j++){
-			if(!(i==j)){
-				float v = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-				// cout << v << endl;
-				M[i][j] = v;
-			}
-			else{
-				M[i][j] = INFTY;
-			}
-		};
+			float v = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			M[i][j] = v;
+		}
 		M[i].shrink_to_fit(); // Return extra memory
-	};
+	}
 	return M;
 }
 
-float access_matrix(const matrix &M, vertex v1, vertex v2){
-	if (v1 > v2){
-		return M[v1][v2];
+AdjMatrix::AdjMatrix(int n){
+	data = rand_matrix(n-1);
+}
+
+float AdjMatrix::access(vertex m, vertex n){
+	if (m == n){
+		return INFTY;
+	}
+	else if (n < m){
+		return data[n][m-n-1];
 	}
 	else{
-		return M[v2][v1];
+		return data[m][n-m-1];
 	}
 }
 
@@ -50,11 +51,11 @@ float matrix_Prims(int n){  // Generates a random adjacency matrix and runs Prim
 		visited.push_back(false);
 	}
 
-	matrix M = rand_matrix(n);
+	AdjMatrix M(n);
 
-	for(int i = 0; i < 4; i++){
-		for(int j = 0; j < 4 - i; j++){
-			cout << M[i][j] << " ";
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < n; j++){
+			cout << M.access(i, j) << " ";
 		}
 		cout << endl;
 	}
@@ -68,12 +69,15 @@ float matrix_Prims(int n){  // Generates a random adjacency matrix and runs Prim
 
 	while(!H.isempty()){
 		Elt e = H.deletemin();
+		e.print();
 		vertex v = e.vert;
 		visited[v] = true;
 		W += e.distance;
+		cout << W << endl;
 		for (int i = 0; i < n; i++){
-			int len = access_matrix(M, i, v);
+			float len = M.access(i,v);
 			if (dist[i] > len && !visited[i]){
+				cout << i << " -> " << len << endl;
 				dist[i] = len;
 				prev[i] = v;
 				H.decreasekey(i, len);
@@ -81,6 +85,14 @@ float matrix_Prims(int n){  // Generates a random adjacency matrix and runs Prim
 
 		}
 	}
+	cout << endl;
+	for (int i = 0; i < dist.size(); i++){
+			cout << dist[i] << endl;
+		}
+		cout << endl;
+		for (int i = 0; i < prev.size(); i++){
+			cout << prev[i]<<endl;
+		}
 	return W;
 }
 

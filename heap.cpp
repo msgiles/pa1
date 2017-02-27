@@ -38,7 +38,7 @@ MinHeap::MinHeap(Elt* array, int length){
 }
 
 MinHeap::MinHeap(std::vector<float> dists){
-    cout << "Loading Arrays..." << endl;
+    //cout << "Loading Arrays..." << endl;
     int len = dists.size();
     keys.resize(len);
     map.resize(len);
@@ -54,7 +54,7 @@ MinHeap::MinHeap(){
 }
 
 void MinHeap::make_heap(){
-    cout << "Making Heap" << endl;
+    //cout << "Making Heap" << endl;
     int length = keys.size();
     for(int i=length-1; i>=0; --i)
     {

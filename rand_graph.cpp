@@ -33,10 +33,28 @@ AdjMatrix::AdjMatrix(int n, int d){
 	matrix Ps = rand_points(n, d);
 	matrix A;
 	A.resize(n - 1);
+    float maxEdgeLength;
+    
+    if (d == 2) {
+        maxEdgeLength = (float)pow(n, -0.4) * 2.5;
+    } else if (d == 3) {
+        maxEdgeLength = (float)pow(n, -0.3) * 2.2;
+    } else if (d == 4) {
+        maxEdgeLength = (float)pow(n, -0.2) * 1.7;
+    } else {
+        maxEdgeLength = 1.0;
+    }
+
 	for(int i = 0; i < n-1; i++){
 		A[i].resize(n - i - 1);
 		for(int j = 0; j < n - i-1; j++){
-			A[i][j] = euclid_distance(Ps[i], Ps[j+i+1], d);
+            float edgeDist = euclid_distance(Ps[i], Ps[j+i+1], d);
+            
+            if (edgeDist > maxEdgeLength) {
+                A[i][j] = 2;
+            } else {
+                A[i][j] = edgeDist;
+            }
 		}
 		// M[i].shrink_to_fit(); // Return extra memory
 	}

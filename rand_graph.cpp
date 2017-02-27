@@ -8,21 +8,28 @@ using namespace std;
 
 void rand_matrix(int n, matrix &M){ // Returns half of a random nxn matrix
 	// srand(time(NULL));
-	cout << "Initializing Matrix..." << endl;
-	cout << "Resizing Outer Vector..." << endl;
+	//cout << "Initializing Matrix..." << endl;
+	//cout << "Resizing Outer Vector..." << endl;
 	M.resize(n);
+    float maxEdgeLength = (float)pow(n, -0.8) * 5.4;
+    
 	for(int i = 0; i < n; i++){
 		if (i % 10000 == 0){
-			cout << "Resizing Inner: " << i << endl;
-			cout << "Generating Values..." << endl;
+			//cout << "Resizing Inner: " << i << endl;
+			//cout << "Generating Values..." << endl;
 		}
 		M[i].resize(n-i);
 		for(int j = 0; j < n - i; j++){
 			float v = (float) (rand()) / (float) (RAND_MAX);
-			M[i][j] = v;
+            
+            if (v > maxEdgeLength) {
+                M[i][j] = 2;
+            } else {
+                M[i][j] = v;
+            }
 		}
 	}
-	cout << "Returning Matrix" << endl;
+	//cout << "Returning Matrix" << endl;
 }
 
 AdjMatrix::AdjMatrix(int n){
@@ -286,5 +293,73 @@ float euclid_Prims_Longest_Edge(int n, int d){ //identical method, returns the l
     // for (int i = 0; i < prev.size(); i++){
     // 	cout << prev[i]<<endl;
     // }
+    return longestEdge;
+}
+
+float matrix_Prims_Longest_Edge(int n){ //identical method, returns the longest edge for testing purposes
+    // std::vector<vertex> prev;
+    std::vector<float> dist;
+    std::vector<bool> visited;
+    // prev.reserve(n);
+    dist.reserve(n);
+    visited.reserve(n);
+    
+    float W = 0.0;
+    float longestEdge = 0.0;
+    
+    for (int i = 0; i < n; i++){
+        dist.push_back(INFTY);
+        // prev.push_back(-1);
+        visited.push_back(false);
+    }
+    //cout << "Making Adjacency Matrix..." << endl;
+    AdjMatrix M(n);
+    //cout << "Adjacency Matrix Made!" << endl;
+    
+    // for(int i = 0; i < n; i++){
+    // 	for(int j = 0; j < n; j++){
+    // 		cout << M.access(i, j) << " ";
+    // 	}
+    // 	cout << endl;
+    // }
+    
+    vertex s = 0;
+    
+    dist[s] = 0;
+    // prev[s] = 0;
+    
+    //cout << "Making Heap" << endl;
+    MinHeap H(dist);
+    //cout << "Heap Made!" << endl;
+    
+    while(!H.isempty()){
+        Elt e = H.deletemin();
+        // e.print();
+        vertex v = e.vert;
+        visited[v] = true;
+        W += e.distance;
+        if (e.distance > longestEdge) {
+            longestEdge = e.distance;
+        }
+        // cout << W << endl;
+        for (int i = 0; i < n; i++){
+            float len = M.access(i,v);
+            if (dist[i] > len && !visited[i]){
+                // cout << i << " -> " << len << endl;
+                dist[i] = len;
+                // prev[i] = v;
+                H.decreasekey(i, len);
+            }
+            
+        }
+    }
+    // cout << endl;
+    // for (int i = 0; i < dist.size(); i++){
+    // 		cout << dist[i] << endl;
+    // 	}
+    // 	cout << endl;
+    // 	for (int i = 0; i < prev.size(); i++){
+    // 		cout << prev[i]<<endl;
+    // 	}
     return longestEdge;
 }

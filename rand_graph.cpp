@@ -6,21 +6,41 @@
 
 using namespace std;
 
-matrix rand_matrix(int n){ // Returns half of a random nxn matrix
+void rand_matrix(int n, matrix &M){ // Returns half of a random nxn matrix
 	// srand(time(NULL));
-	matrix M(n, std::vector<float>(n));
+	cout << "Initializing Matrix..." << endl;
+	cout << "Resizing Outer Vector..." << endl;
+	M.resize(n);
 	for(int i = 0; i < n; i++){
+		if (i % 10000 == 0){
+			cout << "Resizing Inner: " << i << endl;
+			cout << "Generating Values..." << endl;
+		}
+		M[i].resize(n-i);
 		for(int j = 0; j < n - i; j++){
 			float v = (float) (rand()) / (float) (RAND_MAX);
 			M[i][j] = v;
 		}
-		M[i].shrink_to_fit(); // Return extra memory
 	}
-	return M;
+	cout << "Returning Matrix" << endl;
 }
 
 AdjMatrix::AdjMatrix(int n){
-	data = rand_matrix(n-1);
+	rand_matrix(n-1, data);
+}
+
+AdjMatrix::AdjMatrix(int n, int d){
+	matrix Ps = rand_points(n, d);
+	matrix A;
+	A.resize(n - 1);
+	for(int i = 0; i < n-1; i++){
+		A[i].resize(n - i - 1);
+		for(int j = 0; j < n - i-1; j++){
+			A[i][j] = euclid_distance(Ps[i], Ps[j+i+1], d);
+		}
+		// M[i].shrink_to_fit(); // Return extra memory
+	}
+	data = A;
 }
 
 float AdjMatrix::access(vertex m, vertex n){
@@ -51,8 +71,9 @@ float matrix_Prims(int n){  // Generates a random adjacency matrix and runs Prim
 		// prev.push_back(-1);
 		visited.push_back(false);
 	}
-
+	cout << "Making Adjacency Matrix..." << endl;
 	AdjMatrix M(n);
+	cout << "Adjacency Matrix Made!" << endl;
 
 	// for(int i = 0; i < n; i++){
 	// 	for(int j = 0; j < n; j++){
@@ -66,7 +87,9 @@ float matrix_Prims(int n){  // Generates a random adjacency matrix and runs Prim
 	dist[s] = 0;
 	// prev[s] = 0;
 
+	cout << "Making Heap" << endl;
 	MinHeap H(dist);
+	cout << "Heap Made!" << endl;
 
 	while(!H.isempty()){
 		Elt e = H.deletemin();
@@ -127,7 +150,7 @@ float euclid_Prims(int n, int d){
 	visited.reserve(n);
 
 	float W = 0.0;
-	matrix Ps = rand_points(n, d);
+	AdjMatrix M(n, d);
 
 	// for (int i = 0; i<n; i++){
 	// 	cout << "{";
@@ -161,7 +184,7 @@ float euclid_Prims(int n, int d){
 		W += e.distance;
 		// cout << W << endl;
 		for (int i = 0; i < n; i++){
-			float len = euclid_distance(Ps[i], Ps[v], d);
+			float len = M.access(i,v);
 			if (dist[i] > len && !visited[i]){
 				dist[i] = len;
 				// prev[i] = v;

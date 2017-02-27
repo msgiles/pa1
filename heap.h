@@ -6,10 +6,12 @@ using namespace std;
 #define HEAP_H
 
 typedef int vertex;
+const int INFTY = 2;
 
 class Elt{
 public:
 	Elt(vertex vert, float dist);
+	Elt();
 	float distance;
 	vertex vert;
 	float get_dist();

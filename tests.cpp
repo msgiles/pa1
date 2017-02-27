@@ -71,8 +71,8 @@ int main(void){
 	// 	Elt temp = b.deletemin();
 	// 	b.print();
 	// }
-
-	cout << euclid_Prims(5, 2) << endl;
+	cout << matrix_Prims(131072) << endl;
+	// cout << euclid_Prims(5, 2) << endl;
 	// matrix Ps = rand_points(5,2);
 
 

@@ -27,4 +27,6 @@ float euclid_distance(std::vector<float> p1, std::vector<float> p2, int d);
 float euclid_Prims(int n, int d);
 
 float euclid_Prims_Longest_Edge(int n, int d);
+
+float matrix_Prims_Longest_Edge(int n);
 #endif

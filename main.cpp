@@ -44,6 +44,24 @@ int main(int argc, char* argv[]) {
         cout << "maximum: " << max << endl;
         
         return 1;
+    } else if (argc == 4 && atoi(argv[1]) == 2) {
+        int mode = atoi(argv[1]);
+        int numpoints = atoi(argv[2]);
+        int numtrials = atoi(argv[3]);
+        float max = 0.0;
+        
+        for (int i = 0; i < numtrials; i++) {
+            float currentMax = matrix_Prims_Longest_Edge(numpoints);
+            
+            if (currentMax > max) {
+                max = currentMax;
+            }
+            cout << currentMax << endl;
+        }
+        
+        cout << "maximum: " << max << endl;
+        
+        return 1;
     } else {
         return -1;
     }

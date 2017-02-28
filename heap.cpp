@@ -38,7 +38,7 @@ MinHeap::MinHeap(Elt* array, int length){
 }
 
 MinHeap::MinHeap(std::vector<float> dists){
-    //cout << "Loading Arrays..." << endl;
+    cout << "Loading Arrays..." << endl;
     int len = dists.size();
     keys.resize(len);
     map.resize(len);
@@ -47,6 +47,7 @@ MinHeap::MinHeap(std::vector<float> dists){
         keys[i] = e;
         map[i] =i;
     }
+    cout << "Arrays Loaded!" << endl;
     make_heap();
 }
 
@@ -77,6 +78,7 @@ Elt MinHeap::deletemin(){
     keys[0] = keys[len-1];
    	keys.pop_back();
     bubble_down(0);
+    cout << val.vert << ": " << val.distance << endl;
     return val;
 }
 
@@ -84,6 +86,7 @@ void MinHeap::decreasekey(vertex v, float val){
     int dest = map[v];
     assert(v < map.size());
     if (dest != -1){
+        cout << keys[dest].vert << ": " << keys[dest].distance << " -> " << v << ": "<< val << endl;
         keys[dest].distance = val;
         bubble_up(dest);
         return;

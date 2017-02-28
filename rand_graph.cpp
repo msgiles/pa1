@@ -52,7 +52,6 @@ float euclid_distance(std::vector<float> p1, std::vector<float> p2, int d){
 // dimension, pruning if need be
 AdjMatrix::AdjMatrix(int n, int d){
 	if (d==0){
-		cout << "0 dim" << endl;
         rand_matrix(n-1, data);		
 	}else{
 		cout << "euclidean" << endl;
@@ -89,8 +88,8 @@ float AdjMatrix::access(vertex m, vertex n){
 	if (m == n){
 		return INFTY;
 	}
-	else if (n < m){
-		return data[n][m-n-1];
+	else if (m < n){
+		return data[m][m-n-1];
 	}
 	else{
 		return data[m][n-m-1];

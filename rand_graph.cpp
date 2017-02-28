@@ -7,22 +7,22 @@
 using namespace std;
 
 void rand_matrix(int n, matrix &M){ // Returns half of a random nxn matrix
-	// srand(time(NULL));
-	cout << "Initializing Matrix..." << endl;
-	cout << "Resizing Outer Vector..." << endl;
+	srand(time(NULL));
+	// cout << "Initializing Matrix..." << endl;
+	// cout << "Resizing Outer Vector..." << endl;
 	M.resize(n);
 	for(int i = 0; i < n; i++){
-		if (i % 10000 == 0){
-			cout << "Resizing Inner: " << i << endl;
-			cout << "Generating Values..." << endl;
-		}
+		// if (i % 10000 == 0){
+		// 	cout << "Resizing Inner: " << i << endl;
+		// 	cout << "Generating Values..." << endl;
+		// }
 		M[i].resize(n-i);
 		for(int j = 0; j < n - i; j++){
 			float v = (float) (rand()) / (float) (RAND_MAX);
 			M[i][j] = v;
 		}
 	}
-	cout << "Returning Matrix" << endl;
+	// cout << "Returning Matrix" << endl;
 }
 
 AdjMatrix::AdjMatrix(int n){
@@ -30,9 +30,10 @@ AdjMatrix::AdjMatrix(int n){
 }
 
 AdjMatrix::AdjMatrix(int n, int d){
+	cout << "Calling Ps" << endl;
 	matrix Ps = rand_points(n, d);
-	matrix A;
-	A.resize(n - 1);
+	cout << "Recieved Ps" << endl;
+	data.resize(n - 1);
     float maxEdgeLength;
     
     if (d == 2) {
@@ -45,20 +46,21 @@ AdjMatrix::AdjMatrix(int n, int d){
         maxEdgeLength = 1.0;
     }
 
+    cout << "Generating Adj Matrix" << endl;
 	for(int i = 0; i < n-1; i++){
-		A[i].resize(n - i - 1);
+		data[i].resize(n - i - 1);
 		for(int j = 0; j < n - i-1; j++){
             float edgeDist = euclid_distance(Ps[i], Ps[j+i+1], d);
             
             if (edgeDist > maxEdgeLength) {
-                A[i][j] = 2;
+                data[i][j] = maxEdgeLength;
             } else {
-                A[i][j] = edgeDist;
+                data[i][j] = edgeDist;
             }
 		}
 		// M[i].shrink_to_fit(); // Return extra memory
 	}
-	data = A;
+	cout << "Matrix Generation Complete" << endl;
 }
 
 float AdjMatrix::access(vertex m, vertex n){
@@ -89,9 +91,9 @@ float matrix_Prims(int n){  // Generates a random adjacency matrix and runs Prim
 		// prev.push_back(-1);
 		visited.push_back(false);
 	}
-	cout << "Making Adjacency Matrix..." << endl;
+	// cout << "Making Adjacency Matrix..." << endl;
 	AdjMatrix M(n);
-	cout << "Adjacency Matrix Made!" << endl;
+	// cout << "Adjacency Matrix Made!" << endl;
 
 	// for(int i = 0; i < n; i++){
 	// 	for(int j = 0; j < n; j++){
@@ -105,9 +107,9 @@ float matrix_Prims(int n){  // Generates a random adjacency matrix and runs Prim
 	dist[s] = 0;
 	// prev[s] = 0;
 
-	cout << "Making Heap" << endl;
+	// cout << "Making Heap" << endl;
 	MinHeap H(dist);
-	cout << "Heap Made!" << endl;
+	// cout << "Heap Made!" << endl;
 
 	while(!H.isempty()){
 		Elt e = H.deletemin();
@@ -140,7 +142,8 @@ float matrix_Prims(int n){  // Generates a random adjacency matrix and runs Prim
 
 matrix rand_points(int n, int d) // Returns random n-array of d-dimensional random points
 {
-	// srand(time(NULL));
+	cout << "Generating Points" << endl;
+	srand(time(NULL));
 	matrix A(n, std::vector<float>(d));
 	for(int i = 0; i < n; i++){
 		for(int j = 0; j < d; j++){
@@ -148,6 +151,7 @@ matrix rand_points(int n, int d) // Returns random n-array of d-dimensional rand
 			A[i][j] = v;
 		};
 	};
+	cout << "Generation Complete" << endl;
 	return A;
 }
 
@@ -161,14 +165,17 @@ float euclid_distance(std::vector<float> p1, std::vector<float> p2, int d){
 
 float euclid_Prims(int n, int d){
 	// std::vector<vertex> prev;
+	cout << "Making Vectors" << endl;
 	std::vector<float> dist;
 	std::vector<bool> visited;
 	// prev.reserve(n);
 	dist.reserve(n);
 	visited.reserve(n);
-
+	cout << "Vector Construction Complete" << endl;
 	float W = 0.0;
+	cout << "Making Matrix" << endl;
 	AdjMatrix M(n, d);
+	cout << "Matrix Made" << endl;
 
 	// for (int i = 0; i<n; i++){
 	// 	cout << "{";

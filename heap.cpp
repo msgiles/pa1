@@ -4,6 +4,8 @@
 
 using namespace std;
 
+int HEAP_SIZE = 0;
+
 Elt::Elt(vertex v, float dist){
 	vert = v;
 	distance = dist;
@@ -38,8 +40,10 @@ MinHeap::MinHeap(Elt* array, int length){
 }
 
 MinHeap::MinHeap(std::vector<float> dists){
-    cout << "Loading Arrays..." << endl;
+    // cout << "Loading Arrays..." << endl;
     int len = dists.size();
+    HEAP_SIZE = len;
+    cout << HEAP_SIZE;
     keys.resize(len);
     map.resize(len);
     for (int i = 0; i < len; ++i){
@@ -47,7 +51,7 @@ MinHeap::MinHeap(std::vector<float> dists){
         keys[i] = e;
         map[i] =i;
     }
-    cout << "Arrays Loaded!" << endl;
+    // cout << "Arrays Loaded!" << endl;
     make_heap();
 }
 
@@ -64,6 +68,7 @@ void MinHeap::make_heap(){
 }
 
 void MinHeap::insert(Elt item){
+    HEAP_SIZE ++;
 	int len = keys.size();
 	keys[len] = item;
     map[item.vert] = len;
@@ -78,15 +83,19 @@ Elt MinHeap::deletemin(){
     keys[0] = keys[len-1];
    	keys.pop_back();
     bubble_down(0);
-    cout << val.vert << ": " << val.distance << endl;
+    --HEAP_SIZE;
+    if (HEAP_SIZE % 1000 == 0){
+        cout << HEAP_SIZE << endl;
+        cout << val.distance << endl;
+    }
     return val;
 }
 
 void MinHeap::decreasekey(vertex v, float val){
     int dest = map[v];
     assert(v < map.size());
+    cout << keys[dest].vert << ": " << keys[dest].distance << "-> " << v << ": " << val << endl;
     if (dest != -1){
-        cout << keys[dest].vert << ": " << keys[dest].distance << " -> " << v << ": "<< val << endl;
         keys[dest].distance = val;
         bubble_up(dest);
         return;
@@ -125,10 +134,8 @@ void MinHeap::bubble_down(int idx){
     if(minIdx != idx){
         //need to swap
         Elt tmp = keys[idx];
-        vertex pVert = tmp.vert;
-        vertex cVert = keys[minIdx].vert;
-        map[cVert] = idx;
-        map[pVert] = minIdx;
+        map[keys[minIdx].vert] = idx;
+        map[tmp.vert] = minIdx; 
         keys[idx] = keys[minIdx];
         keys[minIdx] = tmp;
         bubble_down(minIdx);
@@ -143,10 +150,8 @@ void MinHeap::bubble_up(int idx){
 
     if(keys[parentIdx].get_dist() > keys[idx].get_dist()){
        	Elt tmp = keys[parentIdx];
-        vertex pVert = tmp.vert;
-        vertex cVert = keys[idx].vert;
-        map[cVert] = parentIdx;
-        map[pVert] = idx;
+        map[keys[parentIdx].vert] = idx;
+        map[tmp.vert] = parentIdx;
         keys[parentIdx] = keys[idx];
         keys[idx] = tmp;
         bubble_up(parentIdx);

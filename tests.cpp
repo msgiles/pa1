@@ -4,18 +4,6 @@
 // #include "heap.h"
 
 int main(void){
-	// matrix M = rand_mtrx(3);
-	// cout << M[0][0] << endl;
-	// for(int i = 0; i < 3; i++){
-	// 	for(int j = 0; j < 3 - i; j++){
-	// 		cout << M[i][j];
-	// 	};
-	// 	cout << endl;
-	// };
-	// Set u = MAKESET(3);
-	// Set v = MAKESET(5);
-	// Set *w = UNION(&u, &v);
-	// return 0;
 
 	// Elt e1 = Elt::Elt(2, .45);
 	// Elt e2 = Elt::Elt(3, .23);
@@ -25,41 +13,41 @@ int main(void){
 
 
 
-	// std::vector<float> vec;
+	std::vector<float> vec;
 
-	// for (int i = 0; i < 20; i++){
-	// 	float v = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	// 	vec.push_back(v);
-	// 	cout << v << endl;
-	// }
+	for (int i = 0; i < 20; i++){
+		float v = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		vec.push_back(v);
+		cout << v << endl;
+	}
 
-	// MinHeap	b(vec);
+	MinHeap	b(vec);
 
-	// cout << endl;
+	cout << endl;
 
-	// b.print();
+	b.print();
 
-	// cout << endl;
+	cout << endl;
 
-	// MinHeap c = b;
+	MinHeap c = b;
 
-	// for (int i = 0; i < 20; i++){
-	// 	Elt e = c.deletemin();
-	// 	e.print();
-	// 	cout << endl;
-	// }
+	for (int i = 0; i < 20; i++){
+		Elt e = c.deletemin();
+		e.print();
+		cout << endl;
+	}
 
-	// Elt e = b.deletemin();
+	Elt e = b.deletemin();
 
-	// cout << endl;
+	cout << e.distance << endl;
 
-	// b.decreasekey(13, e.distance);
+	b.decreasekey(13, e.distance);
 
-	// for (int i = 0; i < 19; i++){
-	// 	Elt e = b.deletemin();
-	// 	e.print();
-	// 	cout << endl;
-	// }
+	for (int i = 0; i < 19; i++){
+		Elt e = b.deletemin();
+		e.print();
+		cout << endl;
+	}
 
 	// b.print();
 
@@ -71,19 +59,27 @@ int main(void){
 	// 	Elt temp = b.deletemin();
 	// 	b.print();
 	// }
-	cout << euclid_Prims(131072) << endl;
+	// cout << euclid_Prims(131072) << endl;
 	// cout << euclid_Prims(5, 2) << endl;
 	// matrix Ps = rand_points(5,2);
 
+	AdjMatrix M(4, 0);
 
-	// matrix M = rand_matrix(4);
+	// rand_matrix(4, M);
 	// cout << M[0][0] << endl;
 	// for(int i = 0; i < 4; i++){
 	// 	for(int j = 0; j < 4 - i; j++){
-	// 		cout << M[i][j];
+	// 		cout << M[i][j] << " ";
 	// 	};
 	// 	cout << endl;
 	// };
+
+	for(int i = 0; i < 4; i++){
+		for(int j = 0; j < 4; j++){
+			cout << M.access(i,j) << " ";
+		};
+	cout << endl;
+	};
 
     return 0;
 

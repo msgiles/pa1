@@ -14,16 +14,17 @@ def plot():
 	avg4 = [27.7434, 47.0335, 78.2952, 130.327, 215.99, 361.546, 603.779, 1008.4, 1688.38, 2827.65]
 	avg = [1.15368, 1.18902, 1.17627, 1.21929, 1.18742, 1.20502, 1.20758, 1.20822, 1.20331, 1.20321]
 
-	#plt.plot(x, y)
+	plt.plot(x, y4)
 	#plt.plot(x, y2)
 	#plt.plot(x, y3)
 	#plt.plot(x, y4)
 	#plt.plot(n, avg2)
 	#plt.plot(n, avg3)
 	#plt.plot(n, avg4)
-	plt.plot(n, avg)
+	#plt.plot(n, avg)
+	plt.title("Maximum Edge Length in 4-Dimensional MST")
 	plt.xlabel('n')
-	plt.ylabel('f(n)')
+	plt.ylabel('k(n)')
 	plt.show()
 
 plot()

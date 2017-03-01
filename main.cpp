@@ -21,46 +21,46 @@ int main(int argc, char* argv[]) {
         
         return 1;
     } else if (argc == 3 && atoi(argv[1]) == 1) { //test mode for Prim's
-        // int mode = atoi(argv[1]);
-        // int numpoints = atoi(argv[2]);
+        int mode = atoi(argv[1]);
+        int numpoints = atoi(argv[2]);
         
-        // cout << matrix_Prims(numpoints) << endl;
+        cout << matrix_Prims(numpoints) << endl;
         return 1;
     } else if (argc == 5 && atoi(argv[1]) == 2) { //trial mode to determine longest edge in MST (for k(n))
-        // int mode = atoi(argv[1]);
-        // int numpoints = atoi(argv[2]);
-        // int numtrials = atoi(argv[3]);
-        // int dimension = atoi(argv[4]);
-        // float max = 0.0;
+        int mode = atoi(argv[1]);
+        int numpoints = atoi(argv[2]);
+        int numtrials = atoi(argv[3]);
+        int dimension = atoi(argv[4]);
+        float max = 0.0;
         
-        // for (int i = 0; i < numtrials; i++) {
-        //     float currentMax = euclid_Prims_Longest_Edge(numpoints, dimension);
+        for (int i = 0; i < numtrials; i++) {
+            float currentMax = euclid_Prims_Longest_Edge(numpoints, dimension);
             
-        //     if (currentMax > max) {
-        //         max = currentMax;
-        //     }
-        //     cout << currentMax << endl;
-        // }
+            if (currentMax > max) {
+                max = currentMax;
+            }
+            cout << currentMax << endl;
+        }
         
-        // cout << "maximum: " << max << endl;
+        cout << "maximum: " << max << endl;
         
         return 1;
     } else if (argc == 4 && atoi(argv[1]) == 2) {
-        // int mode = atoi(argv[1]);
-        // int numpoints = atoi(argv[2]);
-        // int numtrials = atoi(argv[3]);
-        // float max = 0.0;
+        int mode = atoi(argv[1]);
+        int numpoints = atoi(argv[2]);
+        int numtrials = atoi(argv[3]);
+        float max = 0.0;
         
-        // for (int i = 0; i < numtrials; i++) {
-            // float currentMax = matrix_Prims_Longest_Edge(numpoints);
+        for (int i = 0; i < numtrials; i++) {
+            float currentMax = matrix_Prims_Longest_Edge(numpoints);
             
-        //     if (currentMax > max) {
-        //         max = currentMax;
-        //     }
-        //     cout << currentMax << endl;
-        // }
+            if (currentMax > max) {
+                max = currentMax;
+            }
+            cout << currentMax << endl;
+        }
         
-        // cout << "maximum: " << max << endl;
+        cout << "maximum: " << max << endl;
         
         return 1;
     } else {
